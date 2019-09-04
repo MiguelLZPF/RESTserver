@@ -4,9 +4,9 @@ const mysql = require('mysql');
 const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
-    user: "basicUser1",
-    password: "Mysql5070",
-    database: "mysql"
+    user: "root",
+    password: "MySql5070",
+    database: "my_web"
 });
 // Ping database to check for common exception errors.
 pool.getConnection((err, connection) => {

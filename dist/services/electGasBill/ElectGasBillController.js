@@ -1,15 +1,16 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 let pool = require("./../../middleware/database");
-exports.getHistory = () => __awaiter(this, void 0, void 0, function* () {
+exports.getHistory = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill`);
         return parseRAWData(sqlRes, true);
@@ -18,7 +19,7 @@ exports.getHistory = () => __awaiter(this, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.getHistoryByGroup = (group) => __awaiter(this, void 0, void 0, function* () {
+exports.getHistoryByGroup = (group) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill WHERE groupKey = "${group}" `);
         return parseRAWData(sqlRes, true);
@@ -27,7 +28,7 @@ exports.getHistoryByGroup = (group) => __awaiter(this, void 0, void 0, function*
         throw new Error(error);
     }
 });
-exports.getBillById = (id) => __awaiter(this, void 0, void 0, function* () {
+exports.getBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill WHERE id = "${id}" LIMIT 1`);
         return parseRAWData(sqlRes, false);
@@ -36,7 +37,7 @@ exports.getBillById = (id) => __awaiter(this, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.deleteBillById = (id) => __awaiter(this, void 0, void 0, function* () {
+exports.deleteBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`DELETE FROM expenses_bill WHERE expenses_bill.id = ${id}`);
         if (sqlRes.affectedRows == 1) {
@@ -50,7 +51,7 @@ exports.deleteBillById = (id) => __awaiter(this, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.getGroups = () => __awaiter(this, void 0, void 0, function* () {
+exports.getGroups = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield pool.query(`SELECT DISTINCT groupKey FROM expenses_bill`);
     }
@@ -58,7 +59,7 @@ exports.getGroups = () => __awaiter(this, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.calculateBill = (body, id) => __awaiter(this, void 0, void 0, function* () {
+exports.calculateBill = (body, id) => __awaiter(void 0, void 0, void 0, function* () {
     const bill = body;
     if (bill.taxes == undefined) {
         // VAT default
@@ -92,7 +93,7 @@ exports.calculateBill = (body, id) => __awaiter(this, void 0, void 0, function* 
     }
     return yield exports.getBillById(finalId);
 });
-const setExpensesBill = (bill) => __awaiter(this, void 0, void 0, function* () {
+const setExpensesBill = (bill) => __awaiter(void 0, void 0, void 0, function* () {
     let sqlID = 0;
     try {
         const sqlRes = yield pool.query(`INSERT INTO expenses_bill 
@@ -123,7 +124,7 @@ const setExpensesBill = (bill) => __awaiter(this, void 0, void 0, function* () {
         }
     }
 });
-const updateBill = (bill) => __awaiter(this, void 0, void 0, function* () {
+const updateBill = (bill) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`UPDATE expenses_bill SET 
                                       groupKey = '${bill.groupKey}',
@@ -155,7 +156,7 @@ const updateBill = (bill) => __awaiter(this, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-const getDuplicateBill = (duplicate) => __awaiter(this, void 0, void 0, function* () {
+const getDuplicateBill = (duplicate) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill WHERE groupKey LIKE "${duplicate.groupKey}" 
                     AND totalElectVAT LIKE ${duplicate.result.totalElectVAT.toFixed(4)}  AND totalGasVAT 
@@ -166,18 +167,18 @@ const getDuplicateBill = (duplicate) => __awaiter(this, void 0, void 0, function
         throw new Error(error);
     }
 });
-const calElectExpense = (contract) => __awaiter(this, void 0, void 0, function* () {
+const calElectExpense = (contract) => __awaiter(void 0, void 0, void 0, function* () {
     return (contract.consumed * contract.consumedPrice +
         contract.power * contract.days * contract.powerPrice);
 });
-const calGasExpense = (contract) => __awaiter(this, void 0, void 0, function* () {
+const calGasExpense = (contract) => __awaiter(void 0, void 0, void 0, function* () {
     return (contract.consumed * contract.consumedPrice +
         contract.days * contract.fixedPrice);
 });
-const calculateVAT = (total, VAT) => __awaiter(this, void 0, void 0, function* () {
+const calculateVAT = (total, VAT) => __awaiter(void 0, void 0, void 0, function* () {
     return total + total * (VAT / 100);
 });
-const parseRAWData = (rawData, returnAsArray) => __awaiter(this, void 0, void 0, function* () {
+const parseRAWData = (rawData, returnAsArray) => __awaiter(void 0, void 0, void 0, function* () {
     let parsedResult = rawData.map(record => {
         return {
             id: record.id,

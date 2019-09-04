@@ -1,9 +1,10 @@
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
@@ -22,12 +23,12 @@ const request_promise_1 = __importDefault(require("request-promise"));
 const Provider = __importStar(require("./OpenCageDataProvider"));
 jest.mock("request-promise");
 describe("OpenCageDataProvider", () => {
-    test("an empty query string", () => __awaiter(this, void 0, void 0, function* () {
+    test("an empty query string", () => __awaiter(void 0, void 0, void 0, function* () {
         request_promise_1.default.mockImplementation(() => '{"features": []}');
         const result = yield Provider.getPlaces("Paris");
         expect(result).toEqual({ features: [] });
     }));
-    test("an invalid non-json response", () => __awaiter(this, void 0, void 0, function* () {
+    test("an invalid non-json response", () => __awaiter(void 0, void 0, void 0, function* () {
         request_promise_1.default.mockImplementation(() => "Service Unavailable.");
         yield expect(Provider.getPlaces("Chamonix")).rejects.toThrow(SyntaxError);
     }));
