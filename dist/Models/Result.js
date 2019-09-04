@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 class Result {
-    constructor(totalElect, totalElectIVA, totalGas, totalGasIVA, total, totalIVA) {
+    constructor(totalElect, totalElectVAT, totalGas, totalGasVAT, total, totalVAT) {
         this.totalElect = totalElect;
-        this.totalElectIVA = totalElectIVA;
+        this.totalElectVAT = totalElectVAT;
         this.totalGas = totalGas;
-        this.totalGasIVA = totalGasIVA;
+        this.totalGasVAT = totalGasVAT;
         this.total = total;
-        this.totalIVA = totalIVA;
+        this.totalVAT = totalVAT;
     }
 }
 exports.Result = Result;

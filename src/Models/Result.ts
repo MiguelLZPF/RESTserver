@@ -2,10 +2,10 @@ export class Result {
 
     constructor(
         public totalElect:number,
-        public totalElectIVA:number,
+        public totalElectVAT:number,
         public totalGas: number,
-        public totalGasIVA: number,
+        public totalGasVAT: number,
         public total: number,
-        public totalIVA: number
+        public totalVAT: number
     ) { }
 }

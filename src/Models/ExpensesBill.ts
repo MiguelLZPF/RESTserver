@@ -8,6 +8,7 @@ export class ExpensesBill {
     public electData: ElectContract,
     public gasData: GasContract,
     public result: Result,
+    public taxes?: number,
     public groupKey?: string,
     public timeStamp?: string
   ) {}
