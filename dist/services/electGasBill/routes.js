@@ -66,7 +66,7 @@ exports.default = [
         handler: [
             checks_1.checkIdParams,
             ({ params }, res) => __awaiter(void 0, void 0, void 0, function* () {
-                const result = yield ElectGasBillController_1.getBillById(params.id);
+                const result = yield ElectGasBillController_1.getBillById(+params.id);
                 if (result == undefined) { // ID does not exist
                     throw new httpErrors_1.HTTP400Error("There is no record for the requested ID.");
                 }
@@ -82,7 +82,7 @@ exports.default = [
         handler: [
             checks_1.checkIdParams,
             (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-                const result = yield ElectGasBillController_1.calculateBill(req.body, req.params.id);
+                const result = yield ElectGasBillController_1.calculateBill(req.body, +req.params.id);
                 if (result == undefined) { // ID does not exist
                     throw new httpErrors_1.HTTP400Error("There is no record to update for the requested ID.");
                 }
@@ -108,7 +108,7 @@ exports.default = [
         handler: [
             checks_1.checkIdParams,
             ({ params }, res) => __awaiter(void 0, void 0, void 0, function* () {
-                const result = yield ElectGasBillController_1.deleteBillById(params.id);
+                const result = yield ElectGasBillController_1.deleteBillById(+params.id);
                 if (result == undefined || result == false) { // ID does not exist
                     throw new httpErrors_1.HTTP400Error("There is no record to delete for the requested ID.");
                 }

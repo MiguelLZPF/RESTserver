@@ -1,4 +1,5 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const util = require('util');
 const mysql = require('mysql');
 const pool = mysql.createPool({

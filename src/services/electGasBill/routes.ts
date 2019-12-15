@@ -62,8 +62,8 @@ export default [
     method: "get",
     handler: [
       checkIdParams,
-      async ({ params }: Request, res: Response) => {
-        const result = await getBillById(params.id);
+      async ({ params}: Request, res: Response) => {
+        const result = await getBillById(+params.id);
         if (result == undefined) { // ID does not exist
           throw new HTTP400Error("There is no record for the requested ID.");
         } else {
@@ -78,7 +78,7 @@ export default [
     handler: [
       checkIdParams,
       async (req: Request, res: Response) => {
-        const result = await calculateBill(req.body, req.params.id);
+        const result = await calculateBill(req.body, +req.params.id);
         if (result == undefined) { // ID does not exist
           throw new HTTP400Error("There is no record to update for the requested ID.");
         } else {
@@ -103,7 +103,7 @@ export default [
     handler: [
       checkIdParams,
       async ({ params }: Request, res: Response) => {
-        const result = await deleteBillById(params.id);
+        const result = await deleteBillById(+params.id);
         if (result == undefined || result == false) { // ID does not exist
           throw new HTTP400Error("There is no record to delete for the requested ID.");
         } else {
