@@ -12,13 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPlaces = void 0;
 const request_promise_1 = __importDefault(require("request-promise"));
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
-exports.getPlaces = (query) => __awaiter(void 0, void 0, void 0, function* () {
+const getPlaces = (query) => __awaiter(void 0, void 0, void 0, function* () {
     const key = process.env.OPEN_CAGE_DATA_KEY;
     const url = `https://api.opencagedata.com/geocode/v1/geojson?q=${query}&key=${key}&limit=20&no_annotations=1`;
     const response = yield request_promise_1.default(url);
     return JSON.parse(response);
 });
+exports.getPlaces = getPlaces;
 //# sourceMappingURL=OpenCageDataProvider.js.map

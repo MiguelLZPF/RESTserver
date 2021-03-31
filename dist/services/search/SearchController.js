@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPlacesByName = void 0;
 const OpenCageDataProvider_1 = require("./providers/OpenCageDataProvider");
-exports.getPlacesByName = (q) => __awaiter(void 0, void 0, void 0, function* () {
+const getPlacesByName = (q) => __awaiter(void 0, void 0, void 0, function* () {
     if (q.length < 3) {
         return {
             type: "FeatureCollection",
@@ -19,4 +20,5 @@ exports.getPlacesByName = (q) => __awaiter(void 0, void 0, void 0, function* () 
     }
     return yield OpenCageDataProvider_1.getPlaces(q);
 });
+exports.getPlacesByName = getPlacesByName;
 //# sourceMappingURL=SearchController.js.map

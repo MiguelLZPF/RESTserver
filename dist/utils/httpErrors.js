@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.HTTP404Error = exports.HTTP400Error = exports.HTTPClientError = void 0;
 class HTTPClientError extends Error {
     constructor(message) {
         if (message instanceof Object) {

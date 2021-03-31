@@ -9,8 +9,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.calculateBill = exports.getGroups = exports.deleteBillById = exports.getBillById = exports.getHistoryByGroup = exports.getHistory = void 0;
 let pool = require("./../../middleware/database");
-exports.getHistory = () => __awaiter(void 0, void 0, void 0, function* () {
+const getHistory = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill`);
         return parseRAWData(sqlRes, true);
@@ -19,7 +20,8 @@ exports.getHistory = () => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.getHistoryByGroup = (group) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getHistory = getHistory;
+const getHistoryByGroup = (group) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill WHERE groupKey = "${group}" `);
         return parseRAWData(sqlRes, true);
@@ -28,7 +30,8 @@ exports.getHistoryByGroup = (group) => __awaiter(void 0, void 0, void 0, functio
         throw new Error(error);
     }
 });
-exports.getBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getHistoryByGroup = getHistoryByGroup;
+const getBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`SELECT * FROM expenses_bill WHERE id = "${id}" LIMIT 1`);
         return parseRAWData(sqlRes, false);
@@ -37,7 +40,8 @@ exports.getBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.deleteBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getBillById = getBillById;
+const deleteBillById = (id) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const sqlRes = yield pool.query(`DELETE FROM expenses_bill WHERE expenses_bill.id = ${id}`);
         if (sqlRes.affectedRows == 1) {
@@ -51,7 +55,8 @@ exports.deleteBillById = (id) => __awaiter(void 0, void 0, void 0, function* () 
         throw new Error(error);
     }
 });
-exports.getGroups = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.deleteBillById = deleteBillById;
+const getGroups = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         return yield pool.query(`SELECT DISTINCT groupKey FROM expenses_bill`);
     }
@@ -59,7 +64,8 @@ exports.getGroups = () => __awaiter(void 0, void 0, void 0, function* () {
         throw new Error(error);
     }
 });
-exports.calculateBill = (body, id) => __awaiter(void 0, void 0, void 0, function* () {
+exports.getGroups = getGroups;
+const calculateBill = (body, id) => __awaiter(void 0, void 0, void 0, function* () {
     const bill = body;
     if (bill.taxes == undefined) {
         // VAT default
@@ -93,6 +99,7 @@ exports.calculateBill = (body, id) => __awaiter(void 0, void 0, void 0, function
     }
     return yield exports.getBillById(finalId);
 });
+exports.calculateBill = calculateBill;
 const setExpensesBill = (bill) => __awaiter(void 0, void 0, void 0, function* () {
     let sqlID = 0;
     try {
